@@ -1,0 +1,29 @@
+/* This file is for your main application CSS */
+@import "./phoenix.css";
+
+.details {
+  height: 100%;
+  width: 100%;
+}
+.weather {
+  display: flex;
+  justify-content: space-between;
+}
+.weather-params {
+  width: 10%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+.param {
+  line-height: 2;
+}
+
+.dates {
+  display: flex;
+  justify-content: space-between;
+}
+
+.day-of-week {
+  margin-bottom: 2em;
+}
