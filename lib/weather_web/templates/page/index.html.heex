@@ -4,7 +4,7 @@
      <object type="image/svg+xml" data={"images/clear_day.svg"} height="64" width="64" class="weather-icon my-2"/>
      <p class="city_condition my-2">Clear </p>
      <p class="city_name my-2 mb-16">Nairobi</p>
-     <p class="city_temp my-4">28 &deg;C</p>
+     <p class="city_temp my-4"><%= @today["values"]["temperature"] %> &deg;C</p>
      <p>change location</p>
     </div>
     <div class="weather-params">
@@ -12,7 +12,7 @@
         <object type="image/svg+xml" data={"images/humidity.svg"} height="24" width="24" class="my-2"/>
         <div class="param">
           <p class="param_name">Humidity</p>
-          <p class="param_value">50 %</p>
+          <p class="param_value"><%= @today["values"]["humidity"] %> %</p>
         </div>
       </div>
 
@@ -20,7 +20,7 @@
         <object type="image/svg+xml" data={"images/air_pressure.svg"} height="24" width="24" class="my-2"/>
         <div class="param">
           <p class="param_name">Air Pressure</p>
-          <p class="param_value">50 PS</p>
+          <p class="param_value"><%= @today["values"]["pressureSeaLevel"] %> PS</p>
         </div>
       </div>
       <div class="param-wrapper my-4 mb-16"> 
@@ -34,7 +34,7 @@
            <object type="image/svg+xml" data={"images/wind.svg"} height="24" width="24" class="my-2"/>
            <div class="param">
               <p class="param_name">Wind Speed</p>
-              <p class="param_value">50 km/h</p>
+              <p class="param_value"><%= @today["values"]["windSpeed"] %> km/h</p>
            </div>
       </div>
     </div>
@@ -47,7 +47,7 @@
     <div class="time">
       <%= for interval <- @data["intervals"] do%>
         <div class="time_card">
-          <p class="time_hour mb-32"><%= interval["startTime"] %></p>
+          <p class="time_hour mb-32"> <%= interval["startTime"] %> </p>
           <p class="city_temp mb-8"><%= interval["values"]["temperature"] %>&degC</p>
           <p  class="time_desc">Feels like <%= interval["values"]["temperatureApparent"] %>&degC</p>
         </div>
