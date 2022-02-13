@@ -39,7 +39,7 @@ window.addEventListener("phx:page-loading-stop", info => topbar.hide())
 liveSocket.connect()
 
 // expose liveSocket on window for web console debug logs and latency simulation:
-// >> liveSocket.enableDebug()
+liveSocket.enableDebug()
 // >> liveSocket.enableLatencySim(1000)  // enabled for duration of browser session
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
@@ -49,7 +49,7 @@ for (each of elements) {
   var t = each.innerText
   var h = moment(t).hour()
   if (h >= 12) {
-    each.innerText = `${moment(t).hour()} PM`
+    each.innerText = `${moment(t).hour() - 12} PM`
   } else {
     each.innerText = `${moment(t).hour()} AM`
   }

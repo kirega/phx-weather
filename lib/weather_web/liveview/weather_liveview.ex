@@ -1,11 +1,15 @@
-defmodule WeatherWeb.PageController do
-  use WeatherWeb, :controller
+defmodule WeatherWeb.WeatherLive do
+  use Phoenix.LiveView
   require Logger
 
-  def index(conn, _params) do
-    now = DateTime.utc_now()
-    end_time = DateTime.add(now, 8 * 3600, :second) |> DateTime.to_iso8601()
-    now = now |> DateTime.to_iso8601()
+  def render(assigns) do
+    Phoenix.View.render(WeatherWeb.PageView, "weather.live", assigns)
+  end
+
+  def index() do
+    # now = DateTime.utc_now()
+    # end_time = DateTime.add(now, 8 * 3600, :second) |> DateTime.to_iso8601()
+    # now = now |> DateTime.to_iso8601()
 
     # {:ok, res = %{body: %{"data" => %{"timelines" => [timelines]}}}} =
     #   TommorowApi.weather(now, end_time)
@@ -70,7 +74,7 @@ defmodule WeatherWeb.PageController do
             "weatherCode" => 1001,
             "windSpeed" => 2.9
           }
-        },
+        }
         # %{
         #   "startTime" => "2022-01-06T21:00:00+03:00",
         #   "values" => %{
@@ -128,7 +132,20 @@ defmodule WeatherWeb.PageController do
     # end)
     [today | _] = timelines["intervals"]
 
+    # Logger.error("#{inspect(today)}")
 
-    render(conn, "index.html", data: timelines, today: today)
+    %{
+      data: timelines,
+      today: today
+    }
+  end
+
+  def mount(_params, _session, socket) do
+    {:ok, assign(socket, data: index().data, today: index().today, new: 1)}
+  end
+
+  def handle_event("click", _unsigned_params, socket) do
+    val = Decimal.new(socket.assigns.new) |> Decimal.add(1) |> Decimal.to_integer()
+    {:noreply, assign(socket, :new, val)}
   end
 end

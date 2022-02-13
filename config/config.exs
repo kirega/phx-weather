@@ -15,7 +15,7 @@ config :weather, WeatherWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [view: WeatherWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: Weather.PubSub,
-  live_view: [signing_salt: "FEzrwClX"]
+  live_view: [signing_salt: "/WH22f5VBtpJgs1rgxvmaknfnXDLcI1v"]
 
 # Configures the mailer
 #
