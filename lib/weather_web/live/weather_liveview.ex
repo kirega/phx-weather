@@ -1,9 +1,31 @@
 defmodule WeatherWeb.WeatherLive do
   use Phoenix.LiveView
+  alias WeatherWeb.Router, as: Routes
   require Logger
 
+  @impl true
   def render(assigns) do
     Phoenix.View.render(WeatherWeb.PageView, "weather.live", assigns)
+  end
+
+  @impl true
+  def mount(_params, _session, socket) do
+    {:ok, assign(socket, data: index().data, today: index().today, new: 1)}
+  end
+
+  @impl true
+  def handle_event("click", _unsigned_params, socket) do
+    Logger.error("#{inspect(socket.assigns.new)}")
+    val = Decimal.new(socket.assigns.new) |> Decimal.add(1) |> Decimal.to_integer()
+    socket = socket |> push_patch(to: "/weather/location")
+    {:noreply, assign(socket, :new, val)}
+  end
+
+  @impl true
+  def handle_params(unsigned_params, uri, socket) do
+    Logger.error("unsigned params #{inspect(unsigned_params)}")
+    Logger.error("uri #{inspect(uri)}")
+    {:noreply, socket}
   end
 
   def index() do
@@ -132,20 +154,9 @@ defmodule WeatherWeb.WeatherLive do
     # end)
     [today | _] = timelines["intervals"]
 
-    # Logger.error("#{inspect(today)}")
-
     %{
       data: timelines,
       today: today
     }
-  end
-
-  def mount(_params, _session, socket) do
-    {:ok, assign(socket, data: index().data, today: index().today, new: 1)}
-  end
-
-  def handle_event("click", _unsigned_params, socket) do
-    val = Decimal.new(socket.assigns.new) |> Decimal.add(1) |> Decimal.to_integer()
-    {:noreply, assign(socket, :new, val)}
   end
 end

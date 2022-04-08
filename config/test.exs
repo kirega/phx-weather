@@ -18,7 +18,9 @@ config :weather, Weather.Repo,
 config :weather, WeatherWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
   secret_key_base: "Ob2cXBwbIbQc5Idge0S2aYozVWv79Fu7Tk1XL0dkw6RhzgquzgdR53yKgMIPe+mV",
-  server: false
+  check_origin: false,
+  server: true,
+  root: "."
 
 # In test we don't send emails.
 config :weather, Weather.Mailer, adapter: Swoosh.Adapters.Test

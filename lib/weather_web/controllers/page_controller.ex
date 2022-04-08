@@ -3,9 +3,9 @@ defmodule WeatherWeb.PageController do
   require Logger
 
   def index(conn, _params) do
-    now = DateTime.utc_now()
-    end_time = DateTime.add(now, 8 * 3600, :second) |> DateTime.to_iso8601()
-    now = now |> DateTime.to_iso8601()
+    # now = DateTime.utc_now()
+    # end_time = DateTime.add(now, 8 * 3600, :second) |> DateTime.to_iso8601()
+    # now = now |> DateTime.to_iso8601()
 
     # {:ok, res = %{body: %{"data" => %{"timelines" => [timelines]}}}} =
     #   TommorowApi.weather(now, end_time)

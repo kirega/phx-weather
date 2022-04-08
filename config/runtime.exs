@@ -17,8 +17,8 @@ if config_env() == :prod do
   config :weather, Weather.Repo,
     # ssl: true,
     # socket_options: [:inet6],
-    url: database_url,
-    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
+    url: "ecto://postgres:postgres@localhost:5432/weather_prod",
+    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "4")
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
@@ -33,14 +33,12 @@ if config_env() == :prod do
       """
 
   config :weather, WeatherWeb.Endpoint,
-    http: [
-      # Enable IPv6 and bind on all interfaces.
-      # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
-      # See the documentation on https://hexdocs.pm/plug_cowboy/Plug.Cowboy.html
-      # for details about using IPv6 vs IPv4 and loopback vs public addresses.
-      ip: {0, 0, 0, 0, 0, 0, 0, 0},
-      port: String.to_integer(System.get_env("PORT") || "4000")
-    ],
+    http: [port: System.get_env("PORT", "8080") |> String.to_integer()],
+    secret_key_base: System.fetch_env!("SECRET_KEY_BASE"),
+    load_from_system_env: true,
+    check_origin: false,
+    server: true,
+    root: ".",
     secret_key_base: secret_key_base
 
   # ## Using releases
