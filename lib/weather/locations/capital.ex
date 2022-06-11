@@ -14,6 +14,5 @@ defmodule Weather.Locations.Capital do
     capital
     |> cast(attrs, [:name])
     |> validate_required([:name])
-    |> put_assoc(:country, attrs)
   end
 end
