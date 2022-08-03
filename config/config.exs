@@ -44,6 +44,9 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :weather,
+  tommorow_api_key: "kVQW2ncz9PTPcuTzAdPRXVNd8nRTKTbE"
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 

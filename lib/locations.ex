@@ -1,4 +1,4 @@
-defmodule Weather.Locations do
+defmodule Weather.Data.Locations do
   alias Weather.Locations.Country
   import Ecto.Query
   alias Weather.Repo

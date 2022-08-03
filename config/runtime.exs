@@ -17,10 +17,10 @@ if config_env() == :prod do
   config :weather, Weather.Repo,
     # ssl: true,
     # socket_options: [:inet6],
-    ssl: true,
+    ssl: false,
     url: database_url,
-    pool_size: 1,
-    maintenance_database: "lytetwjv"
+    pool_size: 10
+    # maintenance_database: "lytetwjv"
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
