@@ -5,10 +5,10 @@
 # assign a default for the database_user
 DB_USER=${DATABASE_USER:-postgres}
 
-# wait until Postgres is ready
-while ! pg_isready -q -h $DATABASE_HOST -p 5432 -U $DB_USER
+# # wait until Postgres is ready
+while ! pg_isready -h $DATABASE_HOST -U $DB_USER
 do
-  echo "$(date) - waiting for database to start"
+  echo "$(date) - waiting for database to start user -> ${DB_USER} host -> ${DATABASE_HOST} "
   sleep 2
 done
 
