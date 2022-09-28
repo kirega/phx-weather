@@ -1,0 +1,19 @@
+# Default values for weatherapp.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+appname: "weatherapp"
+
+replicaCount: 1
+
+image:
+  name: "kirega/weather_web:latest"
+
+service:
+  weather:
+    type: LoadBalancer
+    port: 8080
+  postgres:
+    type: ClusterIP
+    port: 5432
+    name: db

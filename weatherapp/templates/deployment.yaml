@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "weatherapp.fullname" . }}
+  labels:
+    {{- include "weatherapp.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.appname }}
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appname }}
+    spec:
+      containers:
+        - name: {{ .Values.appname }}
+          image: {{ .Values.image.name }}
+          ports:
+            - containerPort: {{ .Values.service.weather.port }}
+          env:
+            - name: SECRET_KEY_BASE
+              value: "xb9446iJgJtqheH4wK7Hv3L/2F36X0paIO7marOmKjnktE8ZEToCOkEA7TzQbL4x"
+            - name: DATABASE_URL
+              value: "ecto://postgres:postgres@db/weather_dev"
+            - name: PORT
+              value: "8080"
+            - name: DATABASE_HOST
+              value: "db"
+            - name: DB_USER
+              value: "postgres"
+          resources:
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.service.postgres.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.service.postgres.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.service.postgres.name }}
+    spec:
+      containers:
+        - name: {{ .Values.service.postgres.name }}
+          image: postgres:alpine3.16
+          ports:
+            - containerPort: {{ .Values.service.postgres.port }}
+          env:
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              value: "postgres"
+            - name: POSTGRES_DB
+              value: "weather_dev"
+          resources:
+            limits:
+              cpu: "400m"
+              memory: "128Mi"
