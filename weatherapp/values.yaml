@@ -7,7 +7,8 @@ appname: "weatherapp"
 replicaCount: 1
 
 image:
-  name: "kirega/weather_web:latest"
+  name: "kirega/weather_web"
+  version: "latest"
 
 service:
   weather:

@@ -13,23 +13,23 @@ spec:
     metadata:
       labels:
         app: {{ .Values.appname }}
+        date: "{{ now | unixEpoch }}"
     spec:
       containers:
         - name: {{ .Values.appname }}
-          image: {{ .Values.image.name }}
+          image: "{{ .Values.image.name }}:{{ .Values.image.version}}"
           ports:
             - containerPort: {{ .Values.service.weather.port }}
+          envFrom:
+          - secretRef:
+              name: "env-config"
           env:
-            - name: SECRET_KEY_BASE
-              value: "xb9446iJgJtqheH4wK7Hv3L/2F36X0paIO7marOmKjnktE8ZEToCOkEA7TzQbL4x"
-            - name: DATABASE_URL
-              value: "ecto://postgres:postgres@db/weather_dev"
-            - name: PORT
-              value: "8080"
-            - name: DATABASE_HOST
-              value: "db"
-            - name: DB_USER
-              value: "postgres"
+          - name: PORT
+            value: {{ .Values.service.weather.port | quote}}
+
+          - name: DATABASE_HOST
+            value: {{ .Values.service.postgres.name }}
+
           resources:
             limits:
               cpu: "200m"
@@ -54,13 +54,9 @@ spec:
           image: postgres:alpine3.16
           ports:
             - containerPort: {{ .Values.service.postgres.port }}
-          env:
-            - name: POSTGRES_USER
-              value: "postgres"
-            - name: POSTGRES_PASSWORD
-              value: "postgres"
-            - name: POSTGRES_DB
-              value: "weather_dev"
+          envFrom:
+          - secretRef:
+              name: env-config
           resources:
             limits:
               cpu: "400m"
