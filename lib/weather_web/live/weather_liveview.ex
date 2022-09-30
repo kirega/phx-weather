@@ -1,8 +1,34 @@
-defmodule WeatherWeb.PageController do
-  use WeatherWeb, :controller
+defmodule WeatherWeb.WeatherLive do
+  use Phoenix.LiveView
+  alias WeatherWeb.Router, as: Routes
   require Logger
 
-  def index(conn, _params) do
+  @impl true
+  def render(assigns) do
+    Phoenix.View.render(WeatherWeb.PageView, "weather.live", assigns)
+  end
+
+  @impl true
+  def mount(_params, _session, socket) do
+    {:ok, assign(socket, data: index().data, today: index().today, new: 1)}
+  end
+
+  @impl true
+  def handle_event("click", _unsigned_params, socket) do
+    Logger.error("#{inspect(socket.assigns.new)}")
+    val = Decimal.new(socket.assigns.new) |> Decimal.add(1) |> Decimal.to_integer()
+    socket = socket |> push_patch(to: "/weather/location")
+    {:noreply, assign(socket, :new, val)}
+  end
+
+  @impl true
+  def handle_params(unsigned_params, uri, socket) do
+    Logger.error("unsigned params #{inspect(unsigned_params)}")
+    Logger.error("uri #{inspect(uri)}")
+    {:noreply, socket}
+  end
+
+  def index() do
     # now = DateTime.utc_now()
     # end_time = DateTime.add(now, 8 * 3600, :second) |> DateTime.to_iso8601()
     # now = now |> DateTime.to_iso8601()
@@ -70,7 +96,7 @@ defmodule WeatherWeb.PageController do
             "weatherCode" => 1001,
             "windSpeed" => 2.9
           }
-        },
+        }
         # %{
         #   "startTime" => "2022-01-06T21:00:00+03:00",
         #   "values" => %{
@@ -128,7 +154,9 @@ defmodule WeatherWeb.PageController do
     # end)
     [today | _] = timelines["intervals"]
 
-
-    render(conn, "index.html", data: timelines, today: today)
+    %{
+      data: timelines,
+      today: today
+    }
   end
 end

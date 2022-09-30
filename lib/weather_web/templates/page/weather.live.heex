@@ -5,7 +5,11 @@
      <p class="city_condition my-2">Clear </p>
      <p class="city_name my-2 mb-16">Nairobi</p>
      <p class="city_temp my-4"><%= @today["values"]["temperature"] %> &deg;C</p>
-     <p>change location</p>
+     <p phx-click="click">change location</p>
+     <%= @live_action  %>
+     <%= if @live_action == :location do%>
+      <%= live_component WeatherWeb.ChangeLocationComponent%>
+     <% end %>
     </div>
     <div class="weather-params">
       <div class="param-wrapper my-4 mb-16">

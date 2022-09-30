@@ -10,7 +10,16 @@ defmodule Weather.MixProject do
       compilers: [:gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      releases: [
+        weather: [
+          include_erts: true,
+          include_executables_for: [:unix],
+          applications: [
+            runtime_tools: :permanent
+          ]
+        ]
+      ]
     ]
   end
 
@@ -20,7 +29,7 @@ defmodule Weather.MixProject do
   def application do
     [
       mod: {Weather.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :ssl]
     ]
   end
 

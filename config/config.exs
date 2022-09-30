@@ -15,7 +15,7 @@ config :weather, WeatherWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [view: WeatherWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: Weather.PubSub,
-  live_view: [signing_salt: "FEzrwClX"]
+  live_view: [signing_salt: "/WH22f5VBtpJgs1rgxvmaknfnXDLcI1v"]
 
 # Configures the mailer
 #
@@ -34,7 +34,7 @@ config :esbuild,
   version: "0.12.18",
   default: [
     args:
-      ~w(js/app.js --bundle --target=es2016 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
@@ -43,6 +43,9 @@ config :esbuild,
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
+
+config :weather,
+  tommorow_api_key: "kVQW2ncz9PTPcuTzAdPRXVNd8nRTKTbE"
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason

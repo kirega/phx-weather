@@ -2,11 +2,12 @@ import Config
 
 # Configure your database
 config :weather, Weather.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "weather_dev",
-  hostname: "localhost",
+  # username: "postgres",
+  # password: "postgres",
+  # database: "weather_dev",
+  # hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
+  url: "ecto://postgres:postgres@localhost:5432/weather_prod",
   pool_size: 10
 
 # For development, we disable any cache and enable

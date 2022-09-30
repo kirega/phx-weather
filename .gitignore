@@ -24,6 +24,7 @@ weather-*.tar
 
 # Ignore assets that are produced by build tools.
 /priv/static/assets/
+/priv/static
 
 # Ignore digested assets cache.
 /priv/static/cache_manifest.json
@@ -32,3 +33,4 @@ weather-*.tar
 npm-debug.log
 /assets/node_modules/
 /config/*.secret.exs
+/rel
